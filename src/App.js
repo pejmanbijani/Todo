@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import Input from "./components/Input";
+import List from "./components/List";
+import { deleteAll, persistTodos } from "./action/Todoaction";
+import { connect } from "react-redux";
 
-function App() {
+
+
+const App = (props) => {
+  const persistTodos = props.persistTodos
+  useEffect(() => {
+    persistTodos();
+  }, [persistTodos]);
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1 style={{ textDecoration: "underline" }}> Todos App</h1>
+      
+      <Input />
+      <List />
+      <div>
+        <button
+          style={{ marginTop: "20px", cursor: "pointer" }}
+          onClick={deleteAll}
         >
-          Learn React
-        </a>
-      </header>
+          {" "}
+          Delete All
+        </button>
+      </div>
     </div>
+    
   );
-}
+};
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  deleteAll: () => dispatch(deleteAll()),
+  persistTodos: () => dispatch(persistTodos())
+});
+export default connect(
+  (state) => ({
+    state: state.reducer
+  }),
+  {
+    persistTodos,deleteAll
+  }
+)(App);
