@@ -3,7 +3,7 @@ import Input from "./components/Input";
 import List from "./components/List";
 import { deleteAll, persistTodos } from "./action/Todoaction";
 import { connect } from "react-redux";
-
+import './style.css' ;
 
 
 const App = (props) => {
